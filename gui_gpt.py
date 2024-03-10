@@ -14,7 +14,6 @@ init(autoreset=True)
 @dataclass
 class book:
     order_book :pd.DataFrame
-    is_ask :bool
     def normalize_orders(self):
         norm_orders = np.linalg.norm(self.order_book.iloc[:, 1])
         self.order_book['Normalized Amounts'] = self.order_book.iloc[:, 1] / norm_orders
