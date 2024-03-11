@@ -1,13 +1,7 @@
-import asyncio
-import numpy as np
-import pandas as pd
-import matplotlib
+import asyncio, time, numpy as np, pandas as pd, matplotlib,ccxt.async_support as ccxt ,dataclasses
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import time
-import ccxt.async_support as ccxt  # noqa: E402
-from dataclasses import dataclass
-@dataclass
+@dataclasses.dataclass
 class book:
     order_book :pd.DataFrame
     def normalize_orders(self):
@@ -25,7 +19,6 @@ async def bybit_api(pair):
         print(type(e).__name__, str(e), str(e.args))
         raise e
 def plot(pair, duration):
-    print("plotting...")
     plt.ioff()
     plt.rcParams['axes.facecolor']='black'
     plt.rcParams['savefig.facecolor']='black'
@@ -43,16 +36,7 @@ def plot(pair, duration):
         plt.scatter(x, book_bids.order_book['Price'], c=book_bids.order_book['size plot'], cmap='winter_r',s=book_bids.order_book['size plot'])
         plt.title(pair)
         plt.draw()
-        file_name = f'{pair}-plot.png'
-        file_name = file_name.replace('/', '_')
-        plt.savefig(file_name)
-def main():
-# -------------------------#
-    pair = 'DOGEUSDT'#######
-    duration = 36000########
-#--------------------------#
-    plot(pair.upper(),duration)
-    print('success')
-
-if __name__ == "__main__":
-    main()
+        plt.savefig(f'{pair}-plot.png')
+pair = 'DOGEUSDT'#######
+duration = 36000########
+plot(pair.upper(),duration)
